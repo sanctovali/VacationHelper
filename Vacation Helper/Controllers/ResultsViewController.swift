@@ -12,6 +12,8 @@ class ResultsViewController: UITableViewController {
 	
 	static let storyboardIdentifier = String(describing: ResultsViewController.self)
 	
+	var exportButton: UIBarButtonItem!
+	
 	var startDate: Date?
 	var endDate: Date?
 	
@@ -35,6 +37,10 @@ class ResultsViewController: UITableViewController {
 		}
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+	}
+	
 	fileprivate func setupTableView() {
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -44,6 +50,8 @@ class ResultsViewController: UITableViewController {
 	fileprivate func setupNavigationBar() {
 		navigationItem.title = ""
 		navigationController?.setNavigationBarHidden(false, animated: false)
+		exportButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportButtonTapped))
+		navigationItem.rightBarButtonItem = exportButton
 	}
 	
 	fileprivate func registerTableViewCells() {
@@ -51,6 +59,17 @@ class ResultsViewController: UITableViewController {
 						 bundle: nil)
 		tableView.register(cell,
 						   forCellReuseIdentifier: ResultTableViewCell.cellIdentifier)
+	}
+	
+	@objc func exportButtonTapped() {
+
+		if let fileURL =  CitiesDataProvider.generateExportFile(for: cities) {
+			let controller = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+			present(controller, animated: true)
+		} else {
+			print("There is error in \(#function) at line \(#line)")
+		}
+			
 	}
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

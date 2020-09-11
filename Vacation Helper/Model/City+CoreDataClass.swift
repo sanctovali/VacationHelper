@@ -19,6 +19,7 @@ public class City: NSManagedObject, Decodable&Encodable {
 		case name = "name"
 		case coordinates = "coordinates"
 		case isSelected = "isSelected"
+		case averageForecast = "averageForecast"
 	}
 	
 	override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
@@ -49,6 +50,7 @@ public class City: NSManagedObject, Decodable&Encodable {
 		do {
 			try container.encode(name, forKey: .name)
 			try container.encode(isSelected, forKey: .isSelected)
+			try container.encodeIfPresent(averageForecast, forKey: .averageForecast)
 			try coordinatesContainer.encode(coordinates.latitude, forKey: .latitude)
 			try coordinatesContainer.encode(coordinates.longitude, forKey: .longitude)
 		} catch {

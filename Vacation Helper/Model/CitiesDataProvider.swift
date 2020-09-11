@@ -35,4 +35,19 @@ final class CitiesDataProvider {
 		return cities		
 	}
 	
+	class func generateExportFile(for cities: [City]) -> URL? {
+		let fileName = "Vacation City List"
+		
+		do {
+			let path = try FileManager.default.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
+			let fileURL: URL = path.appendingPathComponent(fileName + ".json")
+			let data = try JSONEncoder().encode(cities)
+			try data.write(to: fileURL, options: [])
+			return fileURL
+		} catch let error {
+			print(error, error.localizedDescription)
+			return nil
+		}
+	}
+	
 }
