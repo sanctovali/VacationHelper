@@ -20,5 +20,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3E480D2-1C73-4257-AE28-79CA01E00AC3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vacation Helper/Controllers/StartViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "initialDataCheck()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F3E480D2-1C73-4257-AE28-79CA01E00AC3 - fcfbd47f10e82d92"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vacation_Helper.StartViewController.(initialDataCheck in _903AD2E4FF9F48E61D0778FE2DD6D906)() -&gt; ()"
+                  moduleName = "Vacation Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sanctovali/repos/Test%20Tasks/Ru-You/Vacation%20Helper/Vacation%20Helper/Controllers/StartViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "233">
+               </Location>
+               <Location
+                  uuid = "F3E480D2-1C73-4257-AE28-79CA01E00AC3 - e754feb155796f72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Vacation_Helper.StartViewController.(initialDataCheck in _903AD2E4FF9F48E61D0778FE2DD6D906)() -&gt; ()"
+                  moduleName = "Vacation Helper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sanctovali/repos/Test%20Tasks/Ru-You/Vacation%20Helper/Vacation%20Helper/Controllers/StartViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

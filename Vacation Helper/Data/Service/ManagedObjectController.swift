@@ -19,6 +19,8 @@ class ManagedObjectController {
 	init(with conext: NSManagedObjectContext, coreDataStack: CoreDataStack) {
 		self.coreDataStack = coreDataStack
 		self.context = conext
+		let plistDecoderForArticle = PropertyListDecoder()
+		plistDecoderForArticle.userInfo[CodingUserInfoKey.context!] = context
 	}
 	
 	convenience init() {
@@ -38,6 +40,7 @@ class ManagedObjectController {
 	}
 	
 	func saveData() {
+		print(#function)
 		coreDataStack.saveContext()
 	}
 }

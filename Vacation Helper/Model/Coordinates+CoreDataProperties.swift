@@ -19,5 +19,6 @@ extension Coordinates {
 
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
-
+	
 }
+

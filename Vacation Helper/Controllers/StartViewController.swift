@@ -43,9 +43,15 @@ class StartViewController: UIViewController {
 		let dataController = CityDataController.shared
 		DispatchQueue.main.async {
 			if dataController.objectsCount == 0 {
-				CitiesDataProvider.loadData(to: dataController)
-				self.loadVacationParametersController(isNeedMoreTime: true)
-				
+				CitiesDataProvider.loadData()// { (isCompeled) in
+			//		if isCompeled {
+				//		self.loadVacationParametersController(isNeedMoreTime: true)
+		//			} else {
+//						print("failed")
+//						self.loadVacationParametersController(isNeedMoreTime: false)
+//					}
+//				}
+				self.loadVacationParametersController(isNeedMoreTime: true)				
 			} else {
 				self.loadVacationParametersController(isNeedMoreTime: false)
 			}

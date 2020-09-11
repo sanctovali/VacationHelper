@@ -14,17 +14,21 @@ class ManagedObjectControllersTests: XCTestCase {
 	
 	var dataController: ManagedObjectController!
 	var cityDataController: CityDataController!
-	let newCityName = "Vacation_Helper.NewCityName"
+	var newCityName: String!
 	
 	override func setUp() {
 		super.setUp()
+		newCityName = "Vacation_Helper.NewCityName"
+		
 		cityDataController = CityDataController.shared
 		dataController = cityDataController as ManagedObjectController
 	}
 	
 	override func tearDown() {
 		super.tearDown()
+		newCityName = nil
 		dataController = nil
+		cityDataController = nil
 	}
 	
 	func testInitDataControllers() {
@@ -80,37 +84,30 @@ class ManagedObjectControllersTests: XCTestCase {
 		let initialCitiesCount = cityDataController.objectsCount
 		cityDataController.updateQuery(with: "A")
 		let afterUpdateCitiesCount = cityDataController.objectsCount
-		
 		XCTAssertTrue(initialCitiesCount > afterUpdateCitiesCount)
 	}
 	
-	func testInitTempCity() {
+	func testInitiFromDecoder() {
 		let cityData = "[{\"name\":\"Адыгейск\",\"latitude\":44.8783715,\"longitude\":39.190172},{\"name\":\"Санкт-Петербург\",\"latitude\":59.939095,\"longitude\":30.315868}]".data(using: .utf8)!
-		
-		let decodedCities = try? JSONDecoder().decode([CitiesDataProvider.TempCity].self, from: cityData)
-		
-		let tempCityCoordinate = CitiesDataProvider.Coordinate()
+		var decodedCities: [City]?
+		do {
+			decodedCities = try JSONDecoder().decode([City].self, from: cityData)
+		} catch  {
+			XCTFail()
+		}
 		
 		XCTAssertNotNil(decodedCities)
-		XCTAssertEqual(decodedCities?[0].name, "Адыгейск")
-		XCTAssertEqual(decodedCities?[0].isSelected, false)
-		XCTAssertEqual(decodedCities?[1].coordinate.latitude, 59.939095)
-		XCTAssertEqual(decodedCities?.count, 2)
-		XCTAssertNotNil(tempCityCoordinate)
-		XCTAssertEqual(tempCityCoordinate.longitude, 0)
 	}
 	
 	func testLoadingFromFile() {
-		let decodedCities = CitiesDataProvider.TempCity.loadDataFromJson()
-
-		
+		let decodedCities = CitiesDataProvider.loadDataFromJson()
 		XCTAssertNotNil(decodedCities)
 		XCTAssertEqual(decodedCities.count, 1106)
 		
 	}
 	
 	func testDeleteCity() {
-
+		
 		cityDataController.refresh()
 		let cities = cityDataController.getObjcs()
 		cityDataController.deleteEntites(cities)
@@ -121,17 +118,17 @@ class ManagedObjectControllersTests: XCTestCase {
 	}
 	
 	func testLoadingData() {
+		
 		cityDataController.refresh()
 		let cities = cityDataController.getObjcs()
+
+		CitiesDataProvider.loadData()
+		cityDataController.saveData()
+
+		XCTAssertEqual(cityDataController.objectsCount, cities.count + 1106)
+
 		cityDataController.deleteEntites(cities)
 		cityDataController.saveData()
-		
-		CitiesDataProvider.loadData(to: self.cityDataController)
-		self.cityDataController.saveData()
-		
-		let citiesCount = cityDataController.objectsCount
-
-		XCTAssertEqual(citiesCount, 1106)
 
 	}
 	
@@ -143,5 +140,28 @@ class ManagedObjectControllersTests: XCTestCase {
 		XCTAssertEqual(coordinates.latitude, 55.7)
 		XCTAssertEqual(coordinates.longitude, 37.9)
 	}
+	
+	func testEncode() {
+		let cityData = "[{\"name\":\"Адыгейск\",\"latitude\":44.8783715,\"longitude\":39.190172},{\"name\":\"Санкт-Петербург\",\"latitude\":59.939095,\"longitude\":30.315868}]".data(using: .utf8)!
+		let decodedCities = try! JSONDecoder().decode([City].self, from: cityData)
 		
+		let encoder = JSONEncoder()
+		let adygeisk = decodedCities.first!
+		var data: Data?
+		do {
+			data = try encoder.encode(adygeisk)
+			XCTAssertNotNil(data)
+		} catch {
+			XCTFail()
+		}
+		
+		do {
+			let city = try JSONDecoder().decode(City.self, from: data!)
+			XCTAssertEqual(city.name, adygeisk.name)
+		} catch  {
+			XCTFail()
+		}
+		
+	}
+	
 }
